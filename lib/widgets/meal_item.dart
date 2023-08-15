@@ -5,8 +5,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
   final Meal _meal;
+  final void Function(Meal) _onTapCallback;
 
-  const MealItem(this._meal, {super.key});
+  const MealItem(this._meal, this._onTapCallback, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MealItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () => _onTapCallback(_meal),
         child: Stack(
           children: [
             FadeInImage(
@@ -27,9 +28,13 @@ class MealItem extends StatelessWidget {
               image: NetworkImage(_meal.imageUrl),
             ),
             Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
               child: Container(
                 color: Colors.black54,
-                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 44),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
                 child: Column(
                   children: [
                     Text(
@@ -39,7 +44,7 @@ class MealItem extends StatelessWidget {
                       softWrap: true,
                       overflow:
                           TextOverflow.ellipsis, // Text cut off with 3 dots...
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -59,9 +64,6 @@ class MealItem extends StatelessWidget {
                   ],
                 ),
               ),
-              bottom: 0,
-              left: 0,
-              right: 0,
             )
           ],
         ),
@@ -74,7 +76,7 @@ class MealItem extends StatelessWidget {
         _meal.complexity.name.substring(1);
   }
 
-    String get affordabilityText {
+  String get affordabilityText {
     return _meal.affordability.name[0].toUpperCase() +
         _meal.affordability.name.substring(1);
   }

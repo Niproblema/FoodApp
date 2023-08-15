@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/screens/categories_screen.dart';
+import 'package:food_app/screens/tabs_screen.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
-      home: CategoriesScreen(),
+      home: const TabsScreen(),
     );
   }
 }

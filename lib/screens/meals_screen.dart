@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/models/meal.dart';
+import 'package:food_app/screens/meal_details_screen.dart';
 import 'package:food_app/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  final String _title;
-  final List<Meal> _meals;
+  final String? title;
+  final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavouriteCallback;
 
-  const MealsScreen(this._title, this._meals, {super.key});
+  const MealsScreen({
+    required this.meals,
+    required this.onToggleFavouriteCallback,
+    this.title,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     // Pupulate content
     Widget content;
-    if (_meals.isEmpty) {
+    if (meals.isEmpty) {
       content = Center(
           child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,15 +43,30 @@ class MealsScreen extends StatelessWidget {
       ));
     } else {
       content = ListView.builder(
-          itemCount: _meals.length,
-          itemBuilder: (ctx, index) => MealItem(_meals[index]));
+        itemCount: meals.length,
+        itemBuilder: (ctx, index) =>
+            MealItem(meals[index], (meal) => selectMeal(ctx, meal)),
+      );
+    }
+
+    if (title == null) {
+      return content;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title),
+        title: Text(title!),
       ),
       body: content,
+    );
+  }
+
+  void selectMeal(BuildContext context, Meal meal) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) =>
+            MealDetailsScreen(meal, onToggleFavouriteCallback),
+      ),
     );
   }
 }
