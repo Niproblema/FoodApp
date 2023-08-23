@@ -6,11 +6,9 @@ import 'package:food_app/widgets/meal_item.dart';
 class MealsScreen extends StatelessWidget {
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onToggleFavouriteCallback;
 
   const MealsScreen({
     required this.meals,
-    required this.onToggleFavouriteCallback,
     this.title,
     super.key,
   });
@@ -65,7 +63,7 @@ class MealsScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
-            MealDetailsScreen(meal, onToggleFavouriteCallback),
+            MealDetailsScreen(meal),
       ),
     );
   }
